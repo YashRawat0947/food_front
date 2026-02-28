@@ -6,7 +6,10 @@ export const StoreContext = createContext(null);
 
 // Create axios instance
 const api = axios.create({
-  baseURL: "https://food-back-three.vercel.app",
+  baseURLs: [
+  "https://food-back-three.vercel.app",
+  "https://food-back-5ste54i61-yashrawat0947s-projects.vercel.app"
+],
   timeout: 10000,
 });
 
