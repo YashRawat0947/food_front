@@ -3,15 +3,16 @@ import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export const StoreContext = createContext(null);
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 if (!API_URL) {
   console.error("VITE_API_URL is not defined");
 }
-// Create axios instance
+
 const api = axios.create({
-  baseURL: API_URL || "https://food-back-three.vercel.app", // ← fallback
-  timeout: 10000,
+  baseURL: API_URL || "https://food-back-three.vercel.app",
+  timeout: 30000, // ← increased from 10s to 30s for cold starts
 });
 
 const StoreContextProvider = (props) => {
@@ -81,10 +82,7 @@ const StoreContextProvider = (props) => {
 
     for (const item in cartItems) {
       if (cartItems[item] > 0) {
-        const itemInfo = food_list.find(
-          (product) => product._id === item
-        );
-
+        const itemInfo = food_list.find((product) => product._id === item);
         if (itemInfo) {
           totalAmount += itemInfo.price * cartItems[item];
         }
@@ -137,7 +135,6 @@ const StoreContextProvider = (props) => {
   useEffect(() => {
     const loadData = async () => {
       await fetchFoodList();
-
       if (token) {
         await loadCartData(token);
       }
@@ -147,6 +144,7 @@ const StoreContextProvider = (props) => {
   }, []);
 
   const contextValue = {
+    api,          // ← added so LoginPopup and other components can use it
     food_list,
     cartItems,
     setCartItems,
