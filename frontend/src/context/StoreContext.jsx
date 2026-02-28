@@ -10,7 +10,7 @@ if (!API_URL) {
 }
 // Create axios instance
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: API_URL || "https://food-back-three.vercel.app", // ← fallback
   timeout: 10000,
 });
 
