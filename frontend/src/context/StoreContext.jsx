@@ -3,13 +3,14 @@ import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export const StoreContext = createContext(null);
+const API_URL = import.meta.env.VITE_API_URL;
 
+if (!API_URL) {
+  console.error("VITE_API_URL is not defined");
+}
 // Create axios instance
 const api = axios.create({
-  baseURLs: [
-  "https://food-back-three.vercel.app",
-  "https://food-back-5ste54i61-yashrawat0947s-projects.vercel.app"
-],
+  baseURL: API_URL,
   timeout: 10000,
 });
 
